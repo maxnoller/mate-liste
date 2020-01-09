@@ -6,7 +6,7 @@ from django.dispatch import receiver
 # Create your models here.
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, db_constraint=False)
-    balance = models.IntegerField(help_text="Defines how much money a student has on his account")
+    balance = models.DecimalField(max_digits=6, decimal_places=2, help_text="Defines how much money a student has on his account")
 
     def __str__(self):
         return self.user.username
