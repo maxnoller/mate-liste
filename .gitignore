@@ -1,0 +1,6 @@
+/venv/
+migrations/
+.vscode/
+*.sqlite3
+*.pyc
+*.code-workspace
