@@ -1,6 +1,6 @@
 /venv/
 migrations/
 .vscode/
-*.sqlite
+*.sqlite3
 *.pyc
-*.code_workspace
+*.code-workspace
