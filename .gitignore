@@ -1,5 +1,6 @@
 /venv/
 migrations/
+/staticfiles/
 .vscode/
 *.sqlite3
 *.pyc
