@@ -25,3 +25,4 @@ class Product(models.Model):
         account = Account.objects.get(user=user)
         account.chargeAmount(product.price)
         return True
+        

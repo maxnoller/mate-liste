@@ -8,3 +8,4 @@ from kiosk.models import Product
 def lowerMoneyByOne(request):
     Product.buyProduct(request.user, Product.objects.get(name="Club Mate"))
     return HttpResponse("Maaaate")
+    
