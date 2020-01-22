@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<script src="{% static 'quagga.min.js' %}"></script>
+<script>
+    var products = []
+    function scanProduct(){
+        var sourceElement = document.getElementById("scanner");
+        Quagga.init({
+                    inputStream: {
+                        name: "Live",
+                        type: "LiveStream",
+                        target: document.querySelector('#scanner'),
+                        constraints: {
+                            width: sourceElement.offsetWidth,
+                            height: (sourceElement.offsetHeight-50)*0.8,
+                            facingMode: "environment"
+                        },
+                    },
+                    decoder: {
+                        readers: [
+                            "ean_reader",
+                        ],
+                    },
+    
+                }, function (err) {
+                    if (err) {
+                        console.log(err);
+                        return
+                    }
+    
+                    console.log("Initialization finished. Ready to start");
+                    Quagga.start();
+    
+                    // Set flag to is running
+                    _scannerIsRunning = true;
+                });
+                Quagga.onDetected(function (result) {
+                    console.log(result.codeResult.code);
+                    products.push(result.codeResult.code);
+                    addProductToCart();
+                    Quagga.stop();
+                });
+    }
+    function addProductToCart(){
+        var productsStr = "";
+        for (i = 0; i < products.length;i++){
+            if(productsStr == ""){
+                productsStr = products[i];
+            } else {
+                productsStr = productsStr + "_"+products[i];
+            }
+        }
+        $.ajax({
+        url: '/getCart',
+        data: {
+          'products': productsStr
+        },
+        type: "get",
+        success: function (data) {
+          document.getElementById("main").innerHTML = data;
+        }
+      });    
+    }
+    </script>
+<div class="row h-100" id="main">
+    <div id="scanner" class="col-12 col-lg-6 mx-auto w-100 pl-0 pr-0" style="height: 90vh"></div>
+    <script>scanProduct();</script>
+</div>
+{% endblock %}
