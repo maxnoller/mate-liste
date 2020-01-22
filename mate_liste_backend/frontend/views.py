@@ -19,4 +19,3 @@ def getCart(request):
     for productString in request.GET.get("products").split('_'):
         products.append(Product.objects.get(barcode=productString))
     return render(request, "cart.html", {"products":products})
-
