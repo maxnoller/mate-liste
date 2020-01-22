@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from decimal import *
+from decimal import Decimal
 
 # Create your models here.
 class Account(models.Model):
@@ -28,3 +28,4 @@ def create_user_account(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_account(sender, instance, **kwargs):
     instance.account.save()
+    

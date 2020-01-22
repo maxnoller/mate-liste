@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<script src="{% static 'quagga.min.js' %}"></script>
+<script src="{% static 'scan.js' %}"></script>
+<div class="row h-100" id="main">
+    <div id="scanner" class="col-12 col-lg-6 mx-auto w-100 pl-0 pr-0" style="height: 90vh"></div>
+    <script>scanProduct();</script>
+</div>
+{% endblock %}
