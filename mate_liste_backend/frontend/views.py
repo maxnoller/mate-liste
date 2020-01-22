@@ -1,9 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.http import HttpResponseForbidden
+from django.http import HttpResponseBadRequest
 from kiosk.models import Product
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 # Create your views here.
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect("/")
+
 def index(request):
     return render(request, "base.html", {})
 
@@ -13,9 +21,9 @@ def scan(request):
 
 def buyProducts(request):
     if not request.GET:
-        return HttpResponse("Please pass products as get request")
+        return HttpResponseBadRequest("Please pass products as get request")
     if not request.user:
-        return HttpResponse("Only possible when logged in")
+        return HttpResponseForbidden("Only possible when logged in")
     products = parseProductString(request.GET.get('products'))
     for product in products:
         Product.buyProduct(request.user, product)
@@ -23,7 +31,7 @@ def buyProducts(request):
 
 def getCart(request):
     if not request.GET:
-        return HttpResponse("Please pass products as get request")
+        return HttpResponseBadRequest("Please pass products as get request")
     products = parseProductString(request.GET.get('products'))
     return render(request, "cart.html", {"products":products})
 

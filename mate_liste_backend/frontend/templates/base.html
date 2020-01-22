@@ -21,7 +21,9 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accDropDown">
                     <a class="dropdown-item" href="">Impressum</a>
-                    <a class="dropdown-item" href="">Logout</a>
+                    {% if user.is_authenticated %}
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    {% endif %}
                   </div>
                 </div>
                 </div>

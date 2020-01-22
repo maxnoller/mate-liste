@@ -6,4 +6,5 @@ urlpatterns = [
     path("scan", views.scan, name="scanProduct"),
     path("getCart", views.getCart, name="getCart"),
     path("buyProducts", views.buyProducts, name="buyProducts"),
+    path("logout", views.logout_view, name="logout"),
     ]
