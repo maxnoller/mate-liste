@@ -5,5 +5,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("scan", views.scan, name="scanProduct"),
     path("getCart", views.getCart, name="getCart"),
-    path("buyProduct", views.buyProduct, name="buyProduct"),
+    path("buyProducts", views.buyProducts, name="buyProducts"),
     ]

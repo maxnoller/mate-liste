@@ -20,9 +20,8 @@ class Product(models.Model):
         return self.name+": "+self.price.__str__()+"€"
 
     def buyProduct(user, product):
-        if(user.balance < product.price):
+        if(Account.objects.get(user=user).balance < product.price):
             return False
         account = Account.objects.get(user=user)
         account.chargeAmount(product.price)
         return True
-        

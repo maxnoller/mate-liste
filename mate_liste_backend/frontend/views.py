@@ -9,13 +9,22 @@ def index(request):
 def scan(request):
     return render(request, "scan.html", {})
 
-def buyProduct(request):
-    return HttpResponse("Nada")
+def buyProducts(request):
+    if not request.GET:
+        return HttpResponse("Please pass products as get request")
+    products = parseProductString(request.GET.get('products'))
+    for product in products:
+        Product.buyProduct(request.user, product)
+    return HttpResponse("Success")
 
 def getCart(request):
     if not request.GET:
         return HttpResponse("Please pass products as get request")
-    products = []
-    for productString in request.GET.get("products").split('_'):
-        products.append(Product.objects.get(barcode=productString))
+    products = parseProductString(request.GET.get('products'))
     return render(request, "cart.html", {"products":products})
+
+def parseProductString(string):
+    products = []
+    for productString in string.split('_'):
+        products.append(Product.objects.get(barcode=productString))
+    return products
