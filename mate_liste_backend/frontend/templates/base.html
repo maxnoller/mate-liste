@@ -17,10 +17,11 @@
             <div class="collapse navbar-collapse w-100" id="navbarCol">
                 <div class="navbar-nav dropdown ml-auto">
                   <a class="nav-item dropdown-toggle text-white" id="accDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {% if user.username %}{{user.username}}{% else %}<a href="">Login</a>{% endif %}
+                    {% if user.username %}{{user.username}}{% else %}<a href="{% url 'login' %}">Login</a>{% endif %}
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accDropDown">
-                    <a class="dropdown-item" href="">Impressum</a>
+                    <a class="dropdown-item" href="{% url 'settings' %}">Settings</a>
+                    <a class="dropdown-item" href="{% url 'impressum' %}">Impressum</a>
                     {% if user.is_authenticated %}
                     <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                     {% endif %}
