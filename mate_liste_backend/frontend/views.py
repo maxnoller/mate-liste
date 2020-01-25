@@ -4,10 +4,15 @@ from django.http import HttpResponseForbidden
 from django.http import HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 from kiosk.models import Product
+from finances.models import Account
 
 def index(request):
     """Function view responsible for handling index page"""
-    return render(request, "base.html", {})
+    if request.user.is_authenticated:
+        context = {'balance': Account.objects.get(user=request.user).balance}
+        return render(request, "index.html", context)
+    context = {}
+    return render(request, "kiosk.html", context)
 
 @login_required(redirect_field_name='next', login_url='/login')
 def scan(request):
@@ -39,4 +44,3 @@ def parse_product_string(string):
     for product_string in string.split('_'):
         products.append(Product.objects.get(barcode=product_string))
     return products
-    
