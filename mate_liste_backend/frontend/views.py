@@ -11,7 +11,7 @@ def index(request):
     """Function view responsible for handling index page"""
     if request.user.is_authenticated:
         context = {'balance': Account.objects.get(user=request.user).balance,
-                   'favorites': Favorite.objects.get(user=request.user)}
+                   'favorites': Favorite.objects.filter(user=request.user)}
         return render(request, "index.html", context)
     context = {}
     return render(request, "kiosk.html", context)
