@@ -122,3 +122,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'text-primary',
+    messages.INFO: 'text-info',
+    messages.SUCCESS: 'text-success',
+    messages.WARNING: 'text-warning',
+    messages.ERROR: 'text-danger',
+}
