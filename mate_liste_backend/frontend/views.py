@@ -5,11 +5,13 @@ from django.http import HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 from kiosk.models import Product
 from finances.models import Account
+from .models import Favorite
 
 def index(request):
     """Function view responsible for handling index page"""
     if request.user.is_authenticated:
-        context = {'balance': Account.objects.get(user=request.user).balance}
+        context = {'balance': Account.objects.get(user=request.user).balance,
+                   'favorites': Favorite.objects.get(user=request.user)}
         return render(request, "index.html", context)
     context = {}
     return render(request, "kiosk.html", context)
