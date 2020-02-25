@@ -1,3 +1,6 @@
 {% for favorite in favorites %}
-<div class="col-4">{{favorite.product}}</div>
+<div class="card mr-2" style="width: 10rem;">
+    <h5 class="card-title mx-1 text-center">{{favorite.product.name}}</h5>
+    <p class="card-text text-center">{{favorite.product.price}}</p>
+</div>
 {% endfor %}
