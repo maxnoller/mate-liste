@@ -1,6 +1,7 @@
 /venv/
 migrations/
 staticfiles/
+nodes_modules/
 static/
 .vscode/
 *.sqlite3
