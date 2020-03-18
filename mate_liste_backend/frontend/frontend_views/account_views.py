@@ -20,7 +20,7 @@ def login_view(request):
                 if user is not None:
                     if user.is_active:
                         login(request, user)
-                        return HttpResponseRedirect(next)
+                        return HttpResponseRedirect(next_page)
                     else:
                         messages.error(request, "Account has been deactivated")
                         return render(request, 'login.html', {"next" :next, "form": form})

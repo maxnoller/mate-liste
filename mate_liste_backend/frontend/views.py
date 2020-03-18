@@ -14,7 +14,7 @@ def index(request):
                    'favorites': Favorite.objects.filter(user=request.user).order_by('priority')}
         return render(request, "index.html", context)
     context = {}
-    return render(request, "kiosk.html", context)
+    return render(request, "base.html", context)
 
 @login_required(redirect_field_name='next', login_url='/login')
 def scan(request):
