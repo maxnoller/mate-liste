@@ -9,12 +9,12 @@ from .models import Favorite
 
 def index(request):
     """Function view responsible for handling index page"""
-    if request.user.is_authenticated:
-        context = {'balance': Account.objects.get(user=request.user).balance,
-                   'favorites': Favorite.objects.filter(user=request.user).order_by('priority')}
-        return render(request, "index.html", context)
+    #if request.user.is_authenticated:
+    #    context = {'balance': Account.objects.get(user=request.user).balance,
+    #               'favorites': Favorite.objects.filter(user=request.user).order_by('priority')}
+    #    return render(request, "index.html", context)
     context = {}
-    return render(request, "base.html", context)
+    return render(request, "index.html", context)
 
 @login_required(redirect_field_name='next', login_url='/login')
 def scan(request):
