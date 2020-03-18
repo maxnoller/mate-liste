@@ -1,5 +1,9 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import $ from 'jquery';
+import Popper from 'popper.js';
 import React, { Component } from "react";
 import { render } from "react-dom";
+import NavBar from "./Navbar";
 
 class App extends Component {
   constructor(props) {
@@ -33,7 +37,7 @@ class App extends Component {
 
   render() {
     return (
-      "hi"
+      <NavBar></NavBar>
     );
   }
 }
