@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from 'react-bootstrap';
+import {LinkContainer} from 'react-router-bootstrap';
 
 class NavBar extends Component {
+    
     render() {
       return (
         <Navbar variant="dark" bg="dark" expand="lg">
@@ -13,7 +15,9 @@ class NavBar extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
+                <LinkContainer to="/login/">
+                  <Nav.Link>Login</Nav.Link>
+                </LinkContainer>
                 <Nav.Link href="#link">Link</Nav.Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
