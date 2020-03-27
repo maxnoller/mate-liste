@@ -7,4 +7,4 @@ main.js
 *.sqlite3
 *.pyc
 *.code-workspace
-/fonts/
+fonts/
