@@ -9,7 +9,7 @@ class Product extends Component{
 
         return (
 
-            <Button>Test</Button>
+        <h1>Test</h1>
 
         );
 
