@@ -6,6 +6,7 @@ import {Switch, Route, Link} from "react-router-dom";
 import NavBar from "./Navbar";
 import Login from "./Login";
 import Signup from "./Signup";
+import Product from "./Product"
 
 
 class App extends Component {
@@ -17,8 +18,9 @@ class App extends Component {
           <Switch>
             <Route exact path={"/login/"} component={Login} />
             <Route exact path={"/signup/"} component={Signup} />
-            <Route path={"/"} render={() => <div>Home again</div>} />
+            <Route path={"/"} render={() => <div><Product></Product></div>} />
           </Switch>
+          
         </main>
       </div>
     );
