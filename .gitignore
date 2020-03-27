@@ -2,7 +2,6 @@
 migrations/
 staticfiles/
 node_modules/
-static/
 .vscode/
 *.sqlite3
 *.pyc
