@@ -1,5 +1,4 @@
 from django.db import models
-from finances.models import Account
 
 # Create your models here.
 class Category(models.Model):
@@ -20,8 +19,7 @@ class Product(models.Model):
         return self.name+": "+self.price.__str__()+"€"
 
     def buyProduct(user, product):
-        if(Account.objects.get(user=user).balance < product.price):
+        if(user.balance < product.price):
             return False
-        account = Account.objects.get(user=user)
-        account.chargeAmount(product.price)
+        user.changeBalance(-product.price)
         return True
