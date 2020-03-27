@@ -1,12 +1,11 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from "react";
 import { render } from "react-dom";
 import {Switch, Route, Link} from "react-router-dom";
+import 'typeface-roboto';
 
 import NavBar from "./Navbar";
 import Login from "./Login";
 import Signup from "./Signup";
-
 
 class App extends Component {
   render() {
@@ -21,8 +20,8 @@ class App extends Component {
           </Switch>
         </main>
       </div>
-    );
-  }
+    )
+  };
 }
 
 export default App;
