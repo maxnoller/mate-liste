@@ -3,6 +3,7 @@ migrations/
 staticfiles/
 node_modules/
 .vscode/
+main.js
 *.sqlite3
 *.pyc
 *.code-workspace
