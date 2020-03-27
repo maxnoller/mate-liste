@@ -1,19 +1,57 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-import { CardMedia } from '@material-ui/core';
+import { CardMedia, Card, createStyles, CardContent, Typography, Button, CardActions, CardActionArea } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { blue, red } from "@material-ui/core/colors";
 
 
-class Product extends Component{
-
-    render(){
-
-        return (
-
-        <h1>Test</h1>
-
-        );
-
+const useStyles = makeStyles({
+    root: {
+      minWidth: 275,
+    },
+    media: {
+        height: 200,
+    },
+    button: {
+        background: red,
     }
+  });
+
+function Product (probs){
+
+
+   const classes = useStyles();
+
+
+    return (
+            <div>
+            <Card className={classes.root}> 
+                    <CardMedia 
+                    className={classes.media}
+                    title="Cola"
+                    image={probs.image}/>
+                    <CardContent >
+                        <Typography variant="h4">
+                            {probs.name}
+                        </Typography>
+                        <Typography variant="h5">
+                            {probs.price}€  
+                            <CardActions>
+                            <Button 
+                            className={classes.button}
+                            size="small"
+                            variant="outlined"
+                            >Kaufen</Button>
+                            </CardActions>
+                        </Typography>
+                    </CardContent>
+                    
+            </Card>
+            </div>
+
+    );
+
+    
 
 
 }

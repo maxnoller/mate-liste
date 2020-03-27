@@ -17,7 +17,9 @@ class App extends Component {
           <Switch>
             <Route exact path={"/login/"} component={Login} />
             <Route exact path={"/signup/"} component={Signup} />
-            <Route path={"/"} component={Product} />
+            <Route path={"/"}>
+              <Product name="Cola" price="2" image="https://image.shutterstock.com/image-photo/swindon-wiltshire-uk-september-2018-260nw-1169125957.jpg"/>
+            </Route>
           </Switch>
         </main>
       </div>
