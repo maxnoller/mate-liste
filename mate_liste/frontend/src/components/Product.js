@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { render } from "react-dom";
 import { CardMedia, Card, createStyles, CardContent, Typography, Button, CardActions, CardActionArea } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,10 +7,11 @@ import { blue, red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
     root: {
-      minWidth: 275,
+      width: 250,
+      height: 275
     },
     media: {
-        height: 200,
+        height: 125,
     },
     button: {
         background: red,
@@ -24,7 +25,6 @@ function Product (probs){
 
 
     return (
-            <div>
             <Card className={classes.root}> 
                     <CardMedia 
                     className={classes.media}
@@ -47,7 +47,6 @@ function Product (probs){
                     </CardContent>
                     
             </Card>
-            </div>
 
     );
 

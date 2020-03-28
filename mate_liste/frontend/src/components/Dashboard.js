@@ -1,6 +1,6 @@
 import React from "react"
 import Product from "./Product"
-import { Table, TableBody, TableRow, TableContainer, TableCell } from "@material-ui/core"
+import { Table, TableBody, TableRow, TableContainer, TableCell, GridList, GridListTile } from "@material-ui/core"
 
 
 
@@ -15,27 +15,31 @@ const elements = [
 ];
 
 
+
+
 function Dashboard(probs) {
 
+    
     
     return (
 
         <div>
 
             <h1>Favoriten</h1>
-                <TableContainer> 
-                <Table>
-                    <TableRow>
-                        
-                        {elements.map(element => 
-                            (<TableCell>
-                                {element}
-                            </TableCell>)
-                            )}
+              
+                <GridList cellHeight={275} cols={Math.round(screen.width/260)}>
 
-                    </TableRow>
-               </Table>
-               </TableContainer>  
+                    {elements.map(element =>(
+
+                        <GridListTile>
+                            {element}
+                        </GridListTile>
+
+                    ))}
+                    
+
+                </GridList>
+              
 
 
             <h1>Alle Produkte</h1>
