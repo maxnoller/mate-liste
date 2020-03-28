@@ -6,7 +6,8 @@ import 'typeface-roboto';
 import NavBar from "./Navbar";
 import Login from "./Login";
 import Signup from "./Signup";
-import Product from "./Product"
+import Product from "./Product";
+import Dashboard from "./Dashboard";
 
 class App extends Component {
   render() {
@@ -18,7 +19,7 @@ class App extends Component {
             <Route exact path={"/login/"} component={Login} />
             <Route exact path={"/signup/"} component={Signup} />
             <Route path={"/"}>
-              <Product name="Cola" price="2" image="https://image.shutterstock.com/image-photo/swindon-wiltshire-uk-september-2018-260nw-1169125957.jpg"/>
+              <Dashboard/>
             </Route>
           </Switch>
         </main>
