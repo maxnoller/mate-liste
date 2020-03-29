@@ -1,12 +1,13 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from "react";
 import { render } from "react-dom";
 import {Switch, Route, Link} from "react-router-dom";
+import 'typeface-roboto';
 
 import NavBar from "./Navbar";
 import Login from "./Login";
 import Signup from "./Signup";
-
+import Product from "./Product";
+import Dashboard from "./Dashboard";
 
 class App extends Component {
   render() {
@@ -17,12 +18,14 @@ class App extends Component {
           <Switch>
             <Route exact path={"/login/"} component={Login} />
             <Route exact path={"/signup/"} component={Signup} />
-            <Route path={"/"} render={() => <div>Home again</div>} />
+            <Route path={"/"}>
+              <Dashboard/>
+            </Route>
           </Switch>
         </main>
       </div>
-    );
-  }
+    )
+  };
 }
 
 export default App;
