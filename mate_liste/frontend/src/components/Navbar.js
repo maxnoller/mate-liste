@@ -60,6 +60,7 @@ class NavBar extends Component {
                     <AccountCircle />
                   </IconButton>
                   <Menu
+                    open={false}
                     id="menu-appbar"
                     anchorOrigin={{
                       vertical: "top",
