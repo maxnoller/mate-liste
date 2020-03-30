@@ -1,6 +1,6 @@
 import React from "react"
 import Product from "./Product"
-import { Table, TableBody, TableRow, TableContainer, TableCell, GridList, GridListTile } from "@material-ui/core"
+import { GridList, GridListTile } from "@material-ui/core"
 
 
 
@@ -36,7 +36,6 @@ function Dashboard(probs) {
                         </GridListTile>
 
                     ))}
-                    
 
                 </GridList>
               
