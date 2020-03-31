@@ -8,12 +8,14 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Product from "./Product";
 import Dashboard from "./Dashboard";
+import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
 
 class App extends Component {
   render() {
     return (
       <div className="site">
         <main>
+        <CssBaseline />
           <NavBar />
           <Switch>
             <Route exact path={"/login/"} component={Login} />
