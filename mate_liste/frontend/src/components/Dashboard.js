@@ -27,7 +27,7 @@ function Dashboard(probs) {
 
             <h1>Favoriten</h1>
               
-                <GridList cellHeight={275} cols={Math.round(screen.width/260)}>
+                <GridList cellHeight={300} cols={Math.round(screen.width/150)}>
 
                     {elements.map(element =>(
 

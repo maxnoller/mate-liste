@@ -7,14 +7,11 @@ import { blue, red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
     root: {
-      width: 250,
-      height: 275
+      width: 150,
+      height: 300
     },
     media: {
-        height: 125,
-    },
-    button: {
-        background: red,
+        height: 10,
     }
   });
 
@@ -28,7 +25,7 @@ function Product (probs){
             <Card className={classes.root}> 
                     <CardMedia 
                     className={classes.media}
-                    title="Cola"
+                    title={probs.name}
                     image={probs.image}/>
                     <CardContent >
                         <Typography variant="h4">
@@ -38,7 +35,6 @@ function Product (probs){
                             {probs.price}€  
                             <CardActions>
                             <Button 
-                            className={classes.button}
                             size="small"
                             variant="outlined"
                             >Kaufen</Button>
