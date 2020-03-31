@@ -18,7 +18,9 @@ class App extends Component {
         <CssBaseline />
           <NavBar />
           <Switch>
-            <Route exact path={"/login/"} component={Login} />
+            <Route exact path={"/login/"}>
+              <Login loggedIn={false} />
+            </Route>
             <Route exact path={"/signup/"} component={Signup} />
             <Route path={"/"}>
               <Dashboard/>
