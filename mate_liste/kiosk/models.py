@@ -11,9 +11,8 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=4, decimal_places=2)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    barcode = models.CharField(max_length=128)
+    price = models.DecimalField(max_digits=4, decimal_places=2, default=0)
+    image = models.ImageField(upload_to="images/products/", default="images/products/default.png")
 
     def __str__(self):
         return self.name+": "+self.price.__str__()+"€"

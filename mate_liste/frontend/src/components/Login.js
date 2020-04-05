@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import {withRouter} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import Box from "@material-ui/core/Box";
+import jwt_decode from "jwt-decode";
 import axiosInstance from "../axiosApi";
 
 const sleep = (milliseconds) => {
@@ -14,6 +16,10 @@ const sleep = (milliseconds) => {
 class Login extends Component{
     constructor(props){
         super(props);
+        this.checkLoggedIn = this.checkLoggedIn.bind(this);
+        if(this.checkLoggedIn){
+            props.history.push("/");
+        }
         this.state = {username: "", password: "", snackbarOpen: false, alertElement: null, redirect: false};
 
         this.handleChange = this.handleChange.bind(this);
@@ -32,7 +38,21 @@ class Login extends Component{
             })
         }
     }
-
+    async checkLoggedIn() {
+        if (localStorage.getItem('refresh_token') === null) {
+            return false;
+        }
+        var decoded = jwt_decode(localStorage.getItem('access_token'));
+        try {
+            const response = await axiosInstance.get("/auth/user/" + decoded['username']);
+            if (response.status == 200) {
+                return true;
+            }
+            return false;
+        } catch (error) {
+            throw error;
+        }
+    }
     async handleSubmit(event) {
         event.preventDefault();
         try {
@@ -129,4 +149,4 @@ class Login extends Component{
         )
     }
 }
-export default Login;
+export default withRouter(Login);
