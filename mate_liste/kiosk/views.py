@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from django.contrib.auth import get_user_model
 
 from .models import Product, Favorite
-from .serializers import ProductSerializer, KioskUserSerializer, FavoriteSerializer
+from .serializers import ProductSerializer, FavoritesSerializer, FavoriteSerializer
 
 User = get_user_model()
 
@@ -18,4 +18,4 @@ class FavoriteViewSet(viewsets.ReadOnlyModelViewSet):
 
 class KioskUserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
-    serializer_class = KioskUserSerializer
+    serializer_class = FavoritesSerializer
