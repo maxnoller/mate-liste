@@ -26,7 +26,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
         model = Favorite
         fields = '__all__'        
 
-class UserFavoritesSerializer(serializers.ModelSerializer):
+class FavoritesSerializer(serializers.ModelSerializer):
     favorites = serializers.PrimaryKeyRelatedField(many=True, queryset=Favorite.objects.all().order_by('position'))
 
     class Meta:
