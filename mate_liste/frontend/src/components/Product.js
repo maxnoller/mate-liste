@@ -8,7 +8,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 const useStyles = makeStyles({
     root: {
       width: 130,
-      height: 220
+      height: 240
     },
     media: {
         height: 75,
@@ -39,9 +39,11 @@ function Product (probs){
                             {probs.price}€  
                         </Typography>
 
-                        <Divider/>
+                    </CardContent>
 
-                        <CardActions className={classes.button}>
+                    <Divider/>
+
+                    <CardActions className={classes.button}>
                             <Button 
                             variant="contained"
                             size="small"
@@ -52,8 +54,6 @@ function Product (probs){
                             </IconButton>
 
                             </CardActions>
-
-                    </CardContent>
                     
             </Card>
 

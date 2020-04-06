@@ -1,6 +1,6 @@
 import React from "react"
 import Product from "./Product"
-import { GridList, GridListTile, Divider } from "@material-ui/core"
+import { GridList, GridListTile, Divider, Typography, createMuiTheme } from "@material-ui/core"
 
 
 
@@ -16,18 +16,18 @@ const elements = [
 
 
 
-
 function Dashboard(probs) {
 
-    
     
     return (
 
         <div>
 
-            <h1>Favoriten</h1>
+            <Typography align="center" variant="h3">
+                Favoriten
+            </Typography>
 
-                <GridList cellHeight={220} cols={Math.round(screen.width/155)}>
+                <GridList cellHeight={240} cols={Math.round(screen.width/155)}>
 
                     {elements.map(element =>(
 
@@ -41,7 +41,7 @@ function Dashboard(probs) {
               
 
 
-            <h1>Alle Produkte</h1>
+            <Typography align="center" variant="h3">Alle Produkte</Typography>
            
         </div>
 
