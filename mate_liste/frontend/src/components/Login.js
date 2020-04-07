@@ -17,7 +17,7 @@ class Login extends Component{
     constructor(props){
         super(props);
         this.checkLoggedIn = this.checkLoggedIn.bind(this);
-        if(this.checkLoggedIn){
+        if(this.checkLoggedIn()){
             props.history.push("/");
         }
         this.state = {username: "", password: "", snackbarOpen: false, alertElement: null, redirect: false};
