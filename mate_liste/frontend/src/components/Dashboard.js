@@ -7,9 +7,10 @@ import { GridList, GridListTile, Divider, Typography, createMuiTheme } from "@ma
 
 async function createFavorites(){
     try {
-        const response = await axiosInstance.get("/api/kiosk/favorite/");
+        const response = await axiosInstance.get("/kiosk/favorite/");
         if (response.status == 200) {
             
+            console.log(response)
             return response
 
         } else {
@@ -25,9 +26,7 @@ const elements = [];
 
 function Dashboard(probs) {
 
-    
-
-    console.log(createFavorites());
+    createFavorites()
 
     return (
 
