@@ -17,9 +17,11 @@ class Login extends Component{
     constructor(props){
         super(props);
         this.checkLoggedIn = this.checkLoggedIn.bind(this);
-        if(this.checkLoggedIn()){
-            props.history.push("/");
-        }
+        this.checkLoggedIn().then(function(result){
+            if(result){
+                props.history.push("/");
+            }
+        });
         this.state = {username: "", password: "", snackbarOpen: false, alertElement: null, redirect: false};
 
         this.handleChange = this.handleChange.bind(this);
@@ -39,7 +41,7 @@ class Login extends Component{
         }
     }
     async checkLoggedIn() {
-        if (localStorage.getItem('refresh_token') === null) {
+        if (localStorage.getItem('refresh_token') === null || localStorage.getItem('access_token') === null) {
             return false;
         }
         var decoded = jwt_decode(localStorage.getItem('access_token'));
