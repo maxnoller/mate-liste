@@ -1,24 +1,34 @@
 import React from "react"
 import Product from "./Product"
+import axiosInstance from "../axiosApi";
 import { GridList, GridListTile, Divider, Typography, createMuiTheme } from "@material-ui/core"
 
 
 
-const elements = [
+async function createFavorites(){
+    try {
+        const response = await axiosInstance.get("/api/kiosk/favorite/");
+        if (response.status == 200) {
+            
+            return response
 
-    <Product name="1" price="1" image="https://i.pinimg.com/originals/f0/94/9f/f0949ffd650d6cb98221705cc12b7c0c.jpg"/>,
-    <Product name="2" price="2" image="https://i.pinimg.com/originals/f0/94/9f/f0949ffd650d6cb98221705cc12b7c0c.jpg"/>,
-    <Product name="3" price="3" image="https://i.pinimg.com/originals/f0/94/9f/f0949ffd650d6cb98221705cc12b7c0c.jpg"/>,
-    <Product name="4" price="4" image="https://i.pinimg.com/originals/f0/94/9f/f0949ffd650d6cb98221705cc12b7c0c.jpg"/>,
-    <Product name="5" price="5" image="https://i.pinimg.com/originals/f0/94/9f/f0949ffd650d6cb98221705cc12b7c0c.jpg"/>
-    
-];
+        } else {
+            
+        }
+        return;
+    } catch (error) {
+        throw error;
+    }
+}
 
-
+const elements = [];
 
 function Dashboard(probs) {
 
     
+
+    console.log(createFavorites());
+
     return (
 
         <div>
