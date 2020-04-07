@@ -7,11 +7,28 @@ import { GridList, GridListTile, Divider, Typography, createMuiTheme } from "@ma
 
 async function createFavorites(){
     try {
-        const response = await axiosInstance.get("/kiosk/favorite/");
-        if (response.status == 200) {
+        const favorites = await axiosInstance.get("/kiosk/favorite/");
+        if (favorites.status == 200) {
             
-            console.log(response)
-            return response
+            console.log("RESPONSE:")
+            console.log(favorites.data.length)
+
+            const products = await axiosInstance.get("/kiosk/product/")
+
+            console.log(products.data)
+
+            let len = favorites.data.length
+
+            for(let i = 0;i < len; i++){
+                let id = favorites.data[i].id
+
+                products.data.forEach(product => {
+                    if(product.id == id){
+                        myfavorites.push(<Product name={product.name} price={product.price} image={product.image}/>)
+                    }
+                });
+            }
+            
 
         } else {
             
@@ -22,11 +39,13 @@ async function createFavorites(){
     }
 }
 
-const elements = [];
+
+const myfavorites = [];
 
 function Dashboard(probs) {
 
     createFavorites()
+    
 
     return (
 
@@ -38,7 +57,7 @@ function Dashboard(probs) {
 
                 <GridList cellHeight={240} cols={Math.round(screen.width/155)}>
 
-                    {elements.map(element =>(
+                    {myfavorites.map(element =>(
 
                         <GridListTile key={element.props.name}>
                             {element}
