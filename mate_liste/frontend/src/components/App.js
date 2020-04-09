@@ -7,8 +7,8 @@ import NavBar from "./Navbar";
 import Login from "./Login";
 import Signup from "./Signup";
 import Product from "./Product";
-import ClassDashboard from "./Dashboard copy";
 import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
+import Dashboard from "./Dashboard";
 
 class App extends Component {
   render() {
@@ -23,7 +23,7 @@ class App extends Component {
             </Route>
             <Route exact path={"/signup/"} component={Signup} />
             <Route path={"/"}>
-              <ClassDashboard/>
+              <Dashboard/>
             </Route>
           </Switch>
         </main>

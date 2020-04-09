@@ -5,59 +5,84 @@ import { GridList, GridListTile, Divider, Typography, createMuiTheme } from "@ma
 
 
 
-async function createFavorites(){
-    try {
-        const favorites = await axiosInstance.get("/kiosk/favorite/");
-        if (favorites.status == 200) {
-            
-            console.log("RESPONSE:")
-            console.log(favorites.data.length)
 
-            const products = await axiosInstance.get("/kiosk/product/")
+class Dashboard extends React.Component{
 
-            console.log(products.data)
-
-            let len = favorites.data.length
-
-            for(let i = 0;i < len; i++){
-                let id = favorites.data[i].id
-
-                products.data.forEach(product => {
-                    if(product.id == id){
-                        myfavorites.push(<Product name={product.name} price={product.price} image={product.image}/>)
-                    }
-                });
-            }
-            
-
-        } else {
-            
-        }
-        return;
-    } catch (error) {
-        throw error;
+    constructor(){
+        super()
+        this.state = {myfavorites: [], allproducts: []}
     }
-}
 
 
-const myfavorites = [];
-
-function Dashboard(probs) {
-
-    createFavorites()
+    async createFavorites(){
+        try {
+            const favorites = await axiosInstance.get("/kiosk/favorite/");
+            if (favorites.status == 200) {
+    
+                let len = favorites.data.length
+                let myfavorites = []
     
 
-    return (
 
-        <div>
+                for(let i = 0;i < len; i++){
+                    let id = favorites.data[i].product
+                    let pos = favorites.data[i].position
+
+
+                    const product = await axiosInstance.get("/kiosk/product/" + id)
+
+                    console.log(product)
+
+                    myfavorites[pos] = <Product name={product.data.name} price={product.data.price} image={product.data.image} />
+
+                }
+
+                return myfavorites
+                
+    
+            } else {
+                
+            }
+            return;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async createProducts(){
+        try {
+            const products = await axiosInstance.get("/kiosk/product/")
+            let allproducts = []
+            
+            products.data.forEach(element => {
+                allproducts.push(<Product name={element.name} price={element.price} image={element.image}/>)
+            })
+
+            return allproducts;
+        } catch (error) {
+            console.log("error bei createproducts")
+        }
+    }
+
+    componentDidMount(){
+        
+        this.createFavorites().then(favs => this.setState({myfavorites: favs}))
+        this.createProducts().then(prods => this.setState({allproducts: prods}))
+
+    }
+
+    render(){
+
+        return (<div>
 
             <Typography align="center" variant="h3">
                 Favoriten
             </Typography>
-
+                <Divider/>
                 <GridList cellHeight={240} cols={Math.round(screen.width/155)}>
 
-                    {myfavorites.map(element =>(
+                    
+                    {this.state.myfavorites.map(element =>(
 
                         <GridListTile key={element.props.name}>
                             {element}
@@ -67,15 +92,30 @@ function Dashboard(probs) {
 
                 </GridList>
               
-
+                <Divider/>
 
             <Typography align="center" variant="h3">Alle Produkte</Typography>
            
+            <Divider/>
+            <GridList cellHeight={240} cols={Math.round(screen.width/155)}>
+
+                    
+                    {this.state.allproducts.map(element =>(
+
+                        <GridListTile key={element.props.name}>
+                            {element}
+                        </GridListTile>
+
+                    ))}
+
+                </GridList>
+                <Divider/>
+
         </div>
 
     );
-    
 
+    }
 
 }
 
