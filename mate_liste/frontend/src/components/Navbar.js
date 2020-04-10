@@ -21,23 +21,23 @@ const styles = {
 class NavBar extends Component {
     constructor(props) {
         super(props);
-        this.state = { isLoggedIn: true, open: false, anchorEl: null };
-        this.checkLoggedIn();
+        this.state = { isLoggedIn: true, anchorEl: null, open: false };
         this.handleMenu = this.handleMenu.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
     async checkLoggedIn() {
         if (localStorage.getItem('refresh_token') === null) {
-            this.state.isLoggedIn = false;
+            this.setState({isLoggedIn: false});
             return;
         }
         var decoded = jwt_decode(localStorage.getItem('access_token'));
         try {
             const response = await axiosInstance.get("/auth/user/" + decoded['username']);
             if (response.status == 200) {
-                this.state.isLoggedIn = true;
+                this.setState({isLoggedIn: true});
             } else {
-                this.state.isLoggedIn = false;
+                this.setState({isLoggedIn: false});
             }
             return;
         } catch (error) {
@@ -46,11 +46,19 @@ class NavBar extends Component {
     }
 
     handleMenu(event) {
-        this.state.anchorEl = event.currentTarget;
+        this.setState({anchorEl: event.currentTarget, open: Boolean(event.currentTarget)});
     }
 
     handleClose() {
-        this.state.anchorEl = null;
+        this.setState({anchorEl: null, open: false});
+    }
+
+    handleLogout(){
+        this.setState({isLoggedIn: false});
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("access_token");
+        this.props.history.push("/");
+        this.handleClose();
     }
 
     render() {
@@ -88,7 +96,7 @@ class NavBar extends Component {
                                     onClose={this.handleClose}
                                 >
                                     <MenuItem onClick={this.handleClose}>My Account</MenuItem>
-                                    <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                                    <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                                 </Menu>
                             </div>
                         ) : (

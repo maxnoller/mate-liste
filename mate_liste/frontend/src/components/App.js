@@ -19,7 +19,7 @@ class App extends Component {
           <NavBar />
           <Switch>
             <Route exact path={"/login/"}>
-              <Login loggedIn={false} />
+              <Login />
             </Route>
             <Route exact path={"/signup/"} component={Signup} />
             <Route path={"/"}>

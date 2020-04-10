@@ -37,6 +37,7 @@ class Login extends Component{
         if(this.state.redirect){
             sleep(500).then(() => {
                 this.props.history.push("/");
+                
             })
         }
     }
