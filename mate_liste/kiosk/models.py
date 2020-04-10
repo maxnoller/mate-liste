@@ -18,7 +18,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name+": "+self.price.__str__()+"€"
 
-    def buyProduct(user, product):
+    def buyProduct(self ,user ,product):
         if(user.balance < product.price):
             return False
         user.changeBalance(-product.price)

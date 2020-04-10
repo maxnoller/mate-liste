@@ -1,7 +1,7 @@
 import React from "react"
 import Product from "./Product"
 import axiosInstance from "../axiosApi";
-import { GridList, GridListTile, Divider, Typography, createMuiTheme } from "@material-ui/core"
+import { GridList, GridListTile, Divider, Typography } from "@material-ui/core"
 
 
 
@@ -30,8 +30,6 @@ class Dashboard extends React.Component{
 
 
                     const product = await axiosInstance.get("/kiosk/product/" + id)
-
-                    console.log(product)
 
                     myfavorites[pos] = <Product name={product.data.name} price={product.data.price} image={product.data.image} />
 
