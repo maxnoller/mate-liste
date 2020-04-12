@@ -5,6 +5,7 @@ node_modules/
 .vscode/
 images/
 main.js
+data.jon
 *.sqlite3
 *.pyc
 *.code-workspace
