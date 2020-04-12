@@ -38,8 +38,6 @@ class Dashboard extends React.Component{
                 return myfavorites
                 
     
-            } else {
-                
             }
             return;
         } catch (error) {
