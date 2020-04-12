@@ -34,3 +34,33 @@ class Favorite(models.Model):
 
     def __str__(self):
         return "{}: {}({})".format(self.user, self.product, self.position)
+
+class Transaction(models.Model):
+    user = models.ForeignKey(user_model, on_delete=models.CASCADE, related_name="transactions")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now=True)
+    success = models.BooleanField(default=False)
+
+    def check_viability(self):
+        if(self.product.price <= self.user.balance):
+            print("viable")
+            return True
+        return False
+
+    def complete_transaction(self):
+        if(self.check_viability()):
+            self.user.balance -= self.product.price
+            self.user.save()
+            print("completing transaction")
+            self.success = True
+            self.save()
+            return True
+        self.success = False
+        self.save()
+        return False
+
+    def __str__(self):
+        if(self.success):
+            return "{} bought {}({}€) at {}".format(self.user, self.product, self.product.price, self.time)
+        else:
+            return "{} failed to buy {}({}€) at {}".format(self.user, self.product, self.product.price, self.time)
