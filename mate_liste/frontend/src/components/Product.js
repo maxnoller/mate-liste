@@ -4,60 +4,69 @@ import { CardMedia, Card, createStyles, CardContent, Typography, Button, CardAct
 import { makeStyles } from '@material-ui/core/styles';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
+ 
 
-const useStyles = makeStyles({
-    root: {
-      width: 130,
-      height: 240
-    },
-    media: {
-        height: 75,
-    },
-    button: {
-        
+class Product extends React.Component{
+    
+    onClick(){
+        alert("test")
     }
-  });
 
-function Product (probs){
+    constructor(){
+        super()
+    }
+
+    render(){
+
+        const classes = makeStyles({
+            root: {
+              width: 130,
+              height: 240
+            },
+            media: {
+                height: 75,
+            },
+            button: {
+                
+            }
+          });
 
 
-   const classes = useStyles();
+            return (
+                    <Card className={classes.root}> 
+                            <CardMedia 
+                            className={classes.media}
+                            title={this.probs.name}
+                            image={this.probs.image}/>
+                            <CardContent >
+                                <Typography variant="h4">
+                                    {this.probs.name}
+                                </Typography>
+                                
+                                <Typography variant="h5">
+                                    {this.probs.price}€  
+                                </Typography>
 
+                            </CardContent>
 
-    return (
-            <Card className={classes.root}> 
-                    <CardMedia 
-                    className={classes.media}
-                    title={probs.name}
-                    image={probs.image}/>
-                    <CardContent >
-                        <Typography variant="h4">
-                            {probs.name}
-                        </Typography>
-                        
-                        <Typography variant="h5">
-                            {probs.price}€  
-                        </Typography>
+                            <Divider/>
 
-                    </CardContent>
+                            <CardActions className={classes.button}>
+                                    <Button onClick={onClick}
+                                    variant="contained"
+                                    size="small"
+                                    >Kaufen</Button>
 
-                    <Divider/>
+                                    <IconButton>
+                                        <FavoriteBorderIcon/>
+                                    </IconButton>
 
-                    <CardActions className={classes.button}>
-                            <Button 
-                            variant="contained"
-                            size="small"
-                            >Kaufen</Button>
+                                    </CardActions>
+                            
+                    </Card>
 
-                            <IconButton>
-                                <FavoriteBorderIcon/>
-                            </IconButton>
-
-                            </CardActions>
-                    
-            </Card>
-
-    );
+            );
+        }
 
     
 
