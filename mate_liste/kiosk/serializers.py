@@ -47,5 +47,5 @@ class TransactionGETSerializer(serializers.ModelSerializer):
 class TransactionPOSTSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ('id', 'user', 'product')
-        read_only_fields = ('time', 'success')
+        fields = ('product')
+        read_only_fields = ('time', 'success', 'user', 'id')
