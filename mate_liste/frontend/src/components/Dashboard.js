@@ -31,7 +31,8 @@ class Dashboard extends React.Component{
 
                     const product = await axiosInstance.get("/kiosk/product/" + id)
 
-                    myfavorites[pos] = <Product name={product.data.name} price={product.data.price} image={product.data.image} />
+                    myfavorites[pos] = <Product name={product.data.name} price={product.data.price} image={product.data.image}
+                                        id={id} user={favorites.data[i].user} />
 
                 }
 
