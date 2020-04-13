@@ -37,7 +37,7 @@ class Login extends Component{
         if(this.state.redirect){
             sleep(500).then(() => {
                 this.props.history.push("/");
-                
+
             })
         }
     }
@@ -47,7 +47,7 @@ class Login extends Component{
         }
         var decoded = jwt_decode(localStorage.getItem('access_token'));
         try {
-            const response = await axiosInstance.get("/auth/user/" + decoded['username']);
+            const response = await axiosInstance.get("/auth/user/" + decoded['username']+"/");
             if (response.status == 200) {
                 return true;
             }

@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Grid from "@material-ui/core/Grid";
 import jwt_decode from "jwt-decode";
 import axiosInstance from "../axiosApi";
 import { Link } from 'react-router-dom';
@@ -21,10 +22,12 @@ const styles = {
 class NavBar extends Component {
     constructor(props) {
         super(props);
-        this.state = { isLoggedIn: true, anchorEl: null, open: false };
+        this.state = { isLoggedIn: false, anchorEl: null, open: false, user: null };
         this.handleMenu = this.handleMenu.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.checkLoggedIn = this.checkLoggedIn.bind(this);
+        this.checkLoggedIn();
     }
     async checkLoggedIn() {
         if (localStorage.getItem('refresh_token') === null) {
@@ -35,9 +38,9 @@ class NavBar extends Component {
         try {
             const response = await axiosInstance.get("/auth/user/" + decoded['username']);
             if (response.status == 200) {
-                this.setState({isLoggedIn: true});
+                this.setState({isLoggedIn: true, user: {username: response.data.username, balance: response.data.balance}});
             } else {
-                this.setState({isLoggedIn: false});
+                this.setState({isLoggedIn: false, user: null});
             }
             return;
         } catch (error) {
@@ -54,7 +57,7 @@ class NavBar extends Component {
     }
 
     handleLogout(){
-        this.setState({isLoggedIn: false});
+        this.setState({isLoggedIn: false, user: null});
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("access_token");
         this.props.history.push("/");
@@ -66,20 +69,33 @@ class NavBar extends Component {
             <div className={styles.root}>
                 <AppBar position="static" color="primary">
                     <Toolbar>
-                        <Typography variant="h6" color="inherit" style={{ flex: 1 }}>
-                            MateListe
-                        </Typography>
+                        <Grid
+                            justify="space-between"
+                            container
+                        >
+                        <Grid item>
+                            <Typography variant="h6" color="inherit" style={{ flex: 1 }} noWrap>
+                                MateListe
+                            </Typography>
+                        </Grid>
                         {this.state.isLoggedIn ? (
                             <div>
-                                <IconButton
-                                    aria-label="account of current user"
-                                    aria-controls="menu-appbar"
-                                    aria-haspopup="true"
-                                    color="inherit"
-                                    onClick={this.handleMenu}
-                                >
-                                    <AccountCircle />
-                                </IconButton>
+                                <Grid item>
+                                    <Typography variant="h6" color="inherit">
+                                        {this.state.user.balance}
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <IconButton
+                                        aria-label="account of current user"
+                                        aria-controls="menu-appbar"
+                                        aria-haspopup="true"
+                                        color="inherit"
+                                        onClick={this.handleMenu}
+                                    >
+                                        <AccountCircle />
+                                    </IconButton>
+                                </Grid>
                                 <Menu
                                     open={this.state.open}
                                     id="menu-appbar"
@@ -104,6 +120,7 @@ class NavBar extends Component {
                                     Login
                                 </Button>
                             )}
+                            </Grid>
                     </Toolbar>
                 </AppBar>
             </div>
