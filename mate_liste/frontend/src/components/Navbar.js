@@ -71,18 +71,20 @@ class NavBar extends Component {
                     <Toolbar>
                         <Grid
                             justify="space-between"
+                            direction="row"
                             container
                         >
-                        <Grid item>
-                            <Typography variant="h6" color="inherit" style={{ flex: 1 }} noWrap>
+                        <Grid item align="center">
+                            <Typography variant="h6" color="inherit" align="center">
                                 MateListe
                             </Typography>
                         </Grid>
                         {this.state.isLoggedIn ? (
                             <div>
-                                <Grid item>
+                                <Grid container item justify="center" alignItems="center" direction="row">
+                                    <Grid item style={{textAlign: "center"}}>
                                     <Typography variant="h6" color="inherit">
-                                        {this.state.user.balance}
+                                        {this.state.user.balance}€
                                     </Typography>
                                 </Grid>
                                 <Grid item>
@@ -95,6 +97,7 @@ class NavBar extends Component {
                                     >
                                         <AccountCircle />
                                     </IconButton>
+                                </Grid>
                                 </Grid>
                                 <Menu
                                     open={this.state.open}
