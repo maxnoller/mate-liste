@@ -14,8 +14,9 @@ class Product extends React.Component{
         super(props);
         this.state = {name: props.name, image: props.image, price: props.price,
                         user: props.user, id: props.id, open: false,
-                        error: false}
+                        error: false, favopen: false, faverror: false}
         this.buyProd = this.buyProd.bind(this)
+        this.toggleFav = this.toggleFav.bind(this)
     }
 
     async buyProd(){
@@ -30,11 +31,28 @@ class Product extends React.Component{
 
             this.setState({open: true})
             
+            
         } catch (error) {
             
             this.setState({error: true})
 
         }
+    }
+
+    async toggleFav(){
+
+        try {
+            let response = await axiosInstance.post("kiosk/favorite/",
+            {
+                product: this.state.id
+            })
+
+            this.setState({favopen: true})
+
+        } catch (error) {
+            this.setState({faverror: true})
+        }
+
     }
 
     render(){
@@ -80,13 +98,14 @@ class Product extends React.Component{
                                     onClick={this.buyProd}
                                     >Kaufen</Button>
 
-                                    <IconButton>
+                                    <IconButton onClick={this.toggleFav}>
                                         <FavoriteBorderIcon/>
                                     </IconButton>
 
                                     </CardActions>
                             
                     </Card>
+
                     <Snackbar open={this.state.open} autoHideDuration={5000}
                                 anchorOrigin={{vertical: "bottom", horizontal: "center"}}
                                 onClose={() => this.setState({open: false})}>
@@ -100,6 +119,22 @@ class Product extends React.Component{
                                 onClose={() => this.setState({error: false})}>
                         <Alert severity="error">
                             Beim kauf gab es einen Fehler!
+                        </Alert>
+                    </Snackbar>
+
+                    <Snackbar open={this.state.favopen} autoHideDuration={5000}
+                                anchorOrigin={{vertical: "bottom", horizontal: "center"}}
+                                onClose={() => this.setState({favopen: false})}>
+                        <Alert>
+                            Produktstatus erfolgreich geändert!
+                        </Alert>
+                    </Snackbar>
+
+                    <Snackbar open={this.state.faverror} autoHideDuration={5000}
+                                anchorOrigin={{vertical: "bottom", horizontal: "center"}}
+                                onClose={() => this.setState({faverror: false})}>
+                        <Alert severity="error">
+                            Beim ändern des Produktstatuses gab es einen Fehler!
                         </Alert>
                     </Snackbar>
                 </div>
