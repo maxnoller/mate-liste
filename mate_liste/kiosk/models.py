@@ -15,7 +15,7 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=4, decimal_places=2, default=0)
-    image = models.ImageField(upload_to="images/products/", default="images/products/default.png")
+    image = models.ImageField(upload_to="product_images/", default="default.png")
 
     def __str__(self):
         return self.name+": "+self.price.__str__()+"€"
