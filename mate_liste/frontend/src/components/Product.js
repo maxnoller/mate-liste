@@ -12,8 +12,9 @@ class Product extends React.Component{
         alert("test")
     }
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props);
+        this.state = {name: props.name, image: props.image, price: props.price}
     }
 
     render(){
