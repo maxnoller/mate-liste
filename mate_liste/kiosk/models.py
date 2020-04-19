@@ -23,7 +23,7 @@ class Product(models.Model):
 class Favorite(models.Model):
     user = models.ForeignKey(user_model, on_delete=models.CASCADE, related_name="favorites")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    position = models.IntegerField()
+    position = models.IntegerField(default=0)
 
     def __str__(self):
         return "{}: {}({})".format(self.user, self.product, self.position)
