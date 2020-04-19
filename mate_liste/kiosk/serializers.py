@@ -24,14 +24,15 @@ class ProductSerializer(serializers.Serializer):
 class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
-        fields = ("user", "product", "position")
+        fields = ("user", "product")
+        read_only_fields = ("position",)
 
 class FavoritesSerializer(serializers.ModelSerializer):
     favorites = serializers.PrimaryKeyRelatedField(many=True, queryset=Favorite.objects.all().order_by('position'))
 
     class Meta:
         model = User
-        fields = ('favorites')
+        fields = ('favorites',)
 
 class TransactionGETSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
@@ -47,5 +48,5 @@ class TransactionGETSerializer(serializers.ModelSerializer):
 class TransactionPOSTSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ('product')
-        read_only_fields = ('time', 'success', 'user', 'id')
+        fields = ('product','user')
+        read_only_fields = ('time', 'success', 'id')
