@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { render } from "react-dom";
 import { CardMedia, Card, createStyles, CardContent, Typography, Button, CardActions, CardActionArea, IconButton, Divider, Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -24,8 +23,8 @@ class Product extends React.Component{
 
             let response = await axiosInstance.post("kiosk/transaction/",
             {
-               user: this.state.user,
-               product: this.state.id
+                user: this.state.user,
+                product: this.state.id  
 
             })
 
@@ -44,7 +43,9 @@ class Product extends React.Component{
         try {
             let response = await axiosInstance.post("kiosk/favorite/",
             {
-                product: this.state.id
+                user: this.state.user,
+                product: this.state.id,
+
             })
 
             this.setState({favopen: true})
@@ -134,7 +135,8 @@ class Product extends React.Component{
                                 anchorOrigin={{vertical: "bottom", horizontal: "center"}}
                                 onClose={() => this.setState({faverror: false})}>
                         <Alert severity="error">
-                            Beim ändern des Produktstatuses gab es einen Fehler!
+                            Beim ändern des Produktstatuses
+                             gab es einen Fehler!
                         </Alert>
                     </Snackbar>
                 </div>

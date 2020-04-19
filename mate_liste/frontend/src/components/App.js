@@ -6,9 +6,9 @@ import 'typeface-roboto';
 import NavBar from "./Navbar";
 import Login from "./Login";
 import Signup from "./Signup";
-import Product from "./Product";
 import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
 import Dashboard from "./Dashboard";
+
 
 class App extends Component {
   render() {

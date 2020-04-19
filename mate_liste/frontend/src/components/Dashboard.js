@@ -3,6 +3,8 @@ import Product from "./Product"
 import axiosInstance from "../axiosApi";
 import { GridList, GridListTile, Divider, Typography     } from "@material-ui/core"
 
+import PayPal from "./PayPal"
+
 
 
 
@@ -107,6 +109,9 @@ class Dashboard extends React.Component{
 
                 </GridList>
                 <Divider/>
+
+            <PayPal/>
+                
 
         </div>
 
