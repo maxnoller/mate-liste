@@ -1,3 +1,4 @@
+import jwt
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.views import APIView
@@ -5,10 +6,13 @@ from django.contrib.auth import get_user_model
 from django.http import Http404
 from rest_framework.response import Response
 from rest_framework import status
+from django.conf import settings
+from rest_framework.decorators import action
 
 from .models import Product, Favorite, Transaction
 from .serializers import ProductSerializer, FavoritesSerializer, FavoriteSerializer
 from .serializers import TransactionGETSerializer, TransactionPOSTSerializer
+from .permissions import IsAdminOrSelf
 
 User = get_user_model()
 
@@ -17,13 +21,24 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-class FavoriteViewSet(viewsets.ReadOnlyModelViewSet):
+class FavoriteViewSet(viewsets.ModelViewSet):
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
 
-class KioskUserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = FavoritesSerializer
+    @action(detail=True, methods=['post'], permission_classes=[IsAdminOrSelf])
+    def create_favorite(self, request, pk=None):
+        print("creating favorite")
+        serializer = FavoriteSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserFavoriteDetailView(APIView):
+    def get(self, request, pk, format=None):
+        queryset = User.objects.get(id=pk)
+        serializer = FavoritesSerializer(queryset, many=False)
+        return Response(serializer.data)
 
 class TransactionListView(APIView):
     def get(self, request, format=None):
@@ -32,9 +47,11 @@ class TransactionListView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = TransactionPOSTSerializer(data=request.data)
+        data = request.data
+        data["user"] = jwt.decode(request.META['HTTP_AUTHORIZATION'][4:], settings.SECRET_KEY, algorithms=['HS256'])['user_id']
+        serializer = TransactionPOSTSerializer(data=data)
         if serializer.is_valid():
-            transaction = serializer.save()
+            transaction = serializer.save() 
             transaction.complete_transaction()
             return Response(TransactionGETSerializer(transaction).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
