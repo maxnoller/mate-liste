@@ -1,5 +1,4 @@
 /venv/
-migrations/
 staticfiles/
 node_modules/
 .vscode/
