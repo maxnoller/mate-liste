@@ -8,10 +8,10 @@ import axiosInstance from "../axiosApi";
 import NavBar from "./Navbar";
 import Login from "./Login";
 import Signup from "./Signup";
-import Product from "./Product";
 import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
 import Dashboard from "./Dashboard";
 import UserContext from "../UserContext.js";
+
 
 class App extends Component {
   constructor(props){

@@ -4,6 +4,11 @@ import UserContext from "../UserContext";
 import axiosInstance from "../axiosApi";
 import { GridList, GridListTile, Divider, Typography     } from "@material-ui/core"
 
+import PayPal from "./PayPal"
+
+
+
+
 class Dashboard extends React.Component{
 
     constructor(props){
@@ -108,6 +113,9 @@ class Dashboard extends React.Component{
 
                 </GridList>
                 <Divider/>
+
+            <PayPal/>
+                
 
         </div>
 
