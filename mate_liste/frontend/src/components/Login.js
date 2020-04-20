@@ -8,6 +8,7 @@ import Alert from "@material-ui/lab/Alert";
 import Box from "@material-ui/core/Box";
 import jwt_decode from "jwt-decode";
 import axiosInstance from "../axiosApi";
+import UserContext from "../UserContext";
 
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -16,12 +17,9 @@ const sleep = (milliseconds) => {
 class Login extends Component{
     constructor(props){
         super(props);
-        this.checkLoggedIn = this.checkLoggedIn.bind(this);
-        this.checkLoggedIn().then(function(result){
-            if(result){
-                props.history.push("/");
-            }
-        });
+        if(this.context.user != null){
+            props.history.push("/");
+        }
         this.state = {username: "", password: "", snackbarOpen: false, alertElement: null, redirect: false};
 
         this.handleChange = this.handleChange.bind(this);
@@ -39,21 +37,6 @@ class Login extends Component{
                 this.props.history.push("/");
 
             })
-        }
-    }
-    async checkLoggedIn() {
-        if (localStorage.getItem('refresh_token') === null || localStorage.getItem('access_token') === null) {
-            return false;
-        }
-        var decoded = jwt_decode(localStorage.getItem('access_token'));
-        try {
-            const response = await axiosInstance.get("/auth/user/" + decoded['username']+"/");
-            if (response.status == 200) {
-                return true;
-            }
-            return false;
-        } catch (error) {
-            throw error;
         }
     }
     async handleSubmit(event) {
@@ -152,4 +135,5 @@ class Login extends Component{
         )
     }
 }
+Login.contextType = UserContext;
 export default withRouter(Login);

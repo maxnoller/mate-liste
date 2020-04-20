@@ -1,22 +1,23 @@
 import React from "react"
 import Product from "./Product"
+import UserContext from "../UserContext";
 import axiosInstance from "../axiosApi";
 import { GridList, GridListTile, Divider, Typography     } from "@material-ui/core"
 
-
-
-
 class Dashboard extends React.Component{
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {myfavorites: [], allproducts: []}
     }
 
 
     async createFavorites(){
+        if(this.context.user === null){
+            return [];
+        }
         try {
-            const favorites = await axiosInstance.get("/kiosk/favorite/");
+            const favorites = await axiosInstance.get("/kiosk/favorite/user/"+this.context.user.id+"/");
             if (favorites.status == 200) {
     
                 let len = favorites.data.length
@@ -57,19 +58,19 @@ class Dashboard extends React.Component{
 
             return allproducts;
         } catch (error) {
-            console.log("error bei createproducts")
+            throw error;
         }
     }
-
     componentDidMount(){
-        
-        this.createFavorites().then(favs => this.setState({myfavorites: favs}))
         this.createProducts().then(prods => this.setState({allproducts: prods}))
+    }
+    componentDidUpdate(){
+        
+        this.createFavorites().then(favs => this.setState({myfavorites: favs}));
 
     }
 
     render(){
-
         return (<div>
 
             <Typography align="center" variant="h3">
@@ -115,5 +116,5 @@ class Dashboard extends React.Component{
     }
 
 }
-
+Dashboard.contextType = UserContext;
 export default Dashboard

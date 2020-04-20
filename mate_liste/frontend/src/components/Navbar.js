@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from "@material-ui/core/styles";
+import {withRouter} from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -11,6 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 import jwt_decode from "jwt-decode";
 import axiosInstance from "../axiosApi";
+import UserContext from "../UserContext";
 import { Link } from 'react-router-dom';
 
 const styles = {
@@ -22,30 +24,10 @@ const styles = {
 class NavBar extends Component {
     constructor(props) {
         super(props);
-        this.state = { isLoggedIn: false, anchorEl: null, open: false, user: null };
+        this.state = { anchorEl: null, open: false};
         this.handleMenu = this.handleMenu.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
-        this.checkLoggedIn = this.checkLoggedIn.bind(this);
-        this.checkLoggedIn();
-    }
-    async checkLoggedIn() {
-        if (localStorage.getItem('refresh_token') === null) {
-            this.setState({isLoggedIn: false});
-            return;
-        }
-        var decoded = jwt_decode(localStorage.getItem('access_token'));
-        try {
-            const response = await axiosInstance.get("/auth/user/" + decoded['username']);
-            if (response.status == 200) {
-                this.setState({isLoggedIn: true, user: {username: response.data.username, balance: response.data.balance}});
-            } else {
-                this.setState({isLoggedIn: false, user: null});
-            }
-            return;
-        } catch (error) {
-            throw error;
-        }
     }
 
     handleMenu(event) {
@@ -57,13 +39,12 @@ class NavBar extends Component {
     }
 
     handleLogout(){
-        this.setState({isLoggedIn: false, user: null});
+        this.context.updateValue("user", null);
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("access_token");
         this.props.history.push("/");
         this.handleClose();
     }
-
     render() {
         return (
             <div className={styles.root}>
@@ -79,12 +60,12 @@ class NavBar extends Component {
                                 MateListe
                             </Typography>
                         </Grid>
-                        {this.state.isLoggedIn ? (
+                        {this.context.user != null ? (
                             <div>
                                 <Grid container item justify="center" alignItems="center" direction="row">
                                     <Grid item style={{textAlign: "center"}}>
                                     <Typography variant="h6" color="inherit">
-                                        {this.state.user.balance}€
+                                        {this.context.user.balance}€
                                     </Typography>
                                 </Grid>
                                 <Grid item>
@@ -114,6 +95,7 @@ class NavBar extends Component {
                                     }}
                                     onClose={this.handleClose}
                                 >
+                                    <MenuItem>{this.context.user.username}</MenuItem>
                                     <MenuItem onClick={this.handleClose}>My Account</MenuItem>
                                     <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                                 </Menu>
@@ -132,6 +114,6 @@ class NavBar extends Component {
     }
 
 }
+NavBar.contextType = UserContext;
 
-
-export default withStyles(styles)(NavBar);
+export default withRouter(withStyles(styles)(NavBar));
