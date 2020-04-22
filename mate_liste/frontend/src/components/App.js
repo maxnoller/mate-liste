@@ -16,8 +16,11 @@ import UserContext from "../UserContext.js";
 class App extends Component {
   constructor(props){
     super(props);
-    this.state =  {'user': null, 'updateValue': (key,value) => {this.setState({[key]: value})}};
+    this.state =  {'user': null, 'updateValue': (key,value) => {console.log("test"); this.setState({[key]: value})}};
     this.getUser = this.getUser.bind(this);
+  }
+
+  componentDidMount(){
     this.getUser();
   }
 
