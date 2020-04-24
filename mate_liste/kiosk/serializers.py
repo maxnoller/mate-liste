@@ -22,13 +22,15 @@ class ProductSerializer(serializers.Serializer):
         return instance
 
 class FavoriteSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(many=False)
+    
     class Meta:
         model = Favorite
-        fields = ("user", "product")
+        fields = ("id", "user", "product")
         read_only_fields = ("position",)
 
 class FavoritesSerializer(serializers.ModelSerializer):
-    favorites = serializers.PrimaryKeyRelatedField(many=True, queryset=Favorite.objects.all().order_by('position'))
+    favorites = FavoriteSerializer(many=True)
 
     class Meta:
         model = User

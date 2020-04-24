@@ -18,30 +18,20 @@ class Dashboard extends React.Component{
 
 
     async createFavorites(){
-        if(this.context.user === null){
-            return [];
-        }
         try {
-            const favorites = await axiosInstance.get("/kiosk/favorite/user/"+this.context.user.id+"/");
+            const favorites = await axiosInstance.get("/kiosk/favorite/user/");
             if (favorites.status == 200) {
-    
-                let len = favorites.data.length
                 let myfavorites = []
-    
+                for(let i = 0;i < favorites.data.favorites.length; i++){
+                    let pos = i;
 
 
-                for(let i = 0;i < len; i++){
-                    let id = favorites.data[i].product
-                    let pos = favorites.data[i].position
+                    const product = favorites.data.favorites[i].product;
 
-
-                    const product = await axiosInstance.get("/kiosk/product/" + id)
-
-                    myfavorites[pos] = <Product name={product.data.name} price={product.data.price} image={product.data.image}
-                                        id={id} user={favorites.data[i].user} />
+                    myfavorites[pos] = <Product name={product.name} price={product.price} image={product.image}
+                                        id={i} user={favorites.data.favorites[i].user} />
 
                 }
-
                 return myfavorites
                 
     
@@ -68,11 +58,7 @@ class Dashboard extends React.Component{
     }
     componentDidMount(){
         this.createProducts().then(prods => this.setState({allproducts: prods}))
-    }
-    componentDidUpdate(){
-        
         this.createFavorites().then(favs => this.setState({myfavorites: favs}));
-
     }
 
     render(){
@@ -124,5 +110,4 @@ class Dashboard extends React.Component{
     }
 
 }
-Dashboard.contextType = UserContext;
 export default Dashboard
