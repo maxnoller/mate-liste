@@ -22,14 +22,14 @@ class Dashboard extends React.Component{
             const favorites = await axiosInstance.get("/kiosk/favorite/user/");
             if (favorites.status == 200) {
                 let myfavorites = []
-                for(let i = 0;i < favorites.data.favorites.length; i++){
+                for(let i = 0;i < favorites.data.length; i++){
                     let pos = i;
 
 
-                    const product = favorites.data.favorites[i].product;
+                    const product = favorites.data[i].product;
 
                     myfavorites[pos] = <Product name={product.name} price={product.price} image={product.image}
-                                        id={i} user={favorites.data.favorites[i].user} />
+                                        id={i} user={favorites.data[i].user} />
 
                 }
                 return myfavorites

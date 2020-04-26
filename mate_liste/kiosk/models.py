@@ -25,6 +25,10 @@ class Favorite(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     position = models.IntegerField(default=0)
 
+    def nrof_times_bought(self):
+        queryset = Transaction.objects.filter(user=self.user, product=self.product, success=True)
+        return len(queryset)
+
     def __str__(self):
         return "{}: {}({})".format(self.user, self.product, self.position)
 

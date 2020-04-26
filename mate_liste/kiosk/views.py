@@ -37,8 +37,8 @@ class FavoriteViewSet(viewsets.ModelViewSet):
 class UserFavoriteDetailView(APIView):
     def get(self, request, format=None):
         user_id = jwt.decode(request.META['HTTP_AUTHORIZATION'][4:], settings.SECRET_KEY, algorithms=['HS256'])['user_id']
-        queryset = User.objects.get(id=user_id)
-        serializer = FavoritesSerializer(queryset, many=False)
+        queryset = sorted(Favorite.objects.filter(user=user_id), key=Favorite.nrof_times_bought, reverse=True)
+        serializer = FavoriteSerializer(queryset, many=True)
         return Response(serializer.data)
 
 class TransactionListView(APIView):
