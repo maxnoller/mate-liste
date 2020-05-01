@@ -14,28 +14,31 @@ class Dashboard extends React.Component{
     constructor(props){
         super(props)
         this.state = {myfavorites: [], allproducts: []}
+
+        this.createFavorites = this.createFavorites.bind(this)
+        this.createProducts = this.createProducts.bind(this)
     }
 
 
     async createFavorites(){
+
         if(this.context.user === null){
             return [];
         }
         try {
-            const favorites = await axiosInstance.get("/kiosk/favorite/user/"+this.context.user.id+"/");
+            const favorites = await axiosInstance.get("/kiosk/favorite/user/" + this.context.user.id + "/");
             if (favorites.status == 200) {
     
                 let len = favorites.data.length
                 let myfavorites = []
     
 
-
                 for(let i = 0;i < len; i++){
                     let id = favorites.data[i].product
                     let pos = favorites.data[i].position
 
 
-                    const product = await axiosInstance.get("/kiosk/product/" + id)
+                    const product = await axiosInstance.get("/kiosk/product/" + id + "/")
 
                     myfavorites[pos] = <Product name={product.data.name} price={product.data.price} image={product.data.image}
                                         id={id} user={favorites.data[i].user} />
@@ -56,9 +59,12 @@ class Dashboard extends React.Component{
         try {
             const products = await axiosInstance.get("/kiosk/product/")
             let allproducts = []
-            
+
+            console.log(products)
+
             products.data.forEach(element => {
-                allproducts.push(<Product name={element.name} price={element.price} image={element.image}/>)
+                allproducts.push(<Product name={element.name} price={element.price} 
+                                    image={element.image} id={element.id}/>)
             })
 
             return allproducts;
@@ -66,14 +72,13 @@ class Dashboard extends React.Component{
             throw error;
         }
     }
+
     componentDidMount(){
+
+        this.createFavorites().then(favs => this.setState({myfavorites: favs}))
         this.createProducts().then(prods => this.setState({allproducts: prods}))
     }
-    componentDidUpdate(){
-        
-        this.createFavorites().then(favs => this.setState({myfavorites: favs}));
 
-    }
 
     render(){
         return (<div>
@@ -114,7 +119,7 @@ class Dashboard extends React.Component{
                 </GridList>
                 <Divider/>
 
-            <PayPal/>
+            
                 
 
         </div>
@@ -124,5 +129,6 @@ class Dashboard extends React.Component{
     }
 
 }
+
 Dashboard.contextType = UserContext;
 export default Dashboard

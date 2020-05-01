@@ -28,7 +28,20 @@ class Product extends React.Component{
 
             })
 
-            this.setState({open: true})
+            console.log(response)
+
+            if(response.data.success){
+                
+                this.setState({open: true})
+            
+            }
+            else{
+
+                this.setState({error: true})
+
+            }
+
+           
             
             
         } catch (error) {
