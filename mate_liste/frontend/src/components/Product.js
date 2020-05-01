@@ -12,23 +12,25 @@ class Product extends React.Component{
     constructor(props){
         super(props);
         this.state = {name: props.name, image: props.image, price: props.price,
-                        user: props.user, id: props.id, open: false,
+                        id: props.id, open: false,
                         error: false, favopen: false, faverror: false}
+
+
         this.buyProd = this.buyProd.bind(this)
         this.toggleFav = this.toggleFav.bind(this)
     }
 
     async buyProd(){
+
         try {
 
             let response = await axiosInstance.post("kiosk/transaction/",
             {
-                user: this.state.user,
                 product: this.state.id  
 
             })
 
-            console.log(response)
+            
 
             if(response.data.success){
                 
@@ -56,7 +58,6 @@ class Product extends React.Component{
         try {
             let response = await axiosInstance.post("kiosk/favorite/",
             {
-                user: this.state.user,
                 product: this.state.id,
 
             })

@@ -21,42 +21,18 @@ class Dashboard extends React.Component{
 
 
     async createFavorites(){
-<<<<<<< HEAD
-
-        if(this.context.user === null){
-            return [];
-        }
-        try {
-            const favorites = await axiosInstance.get("/kiosk/favorite/user/" + this.context.user.id + "/");
-=======
         try {
             const favorites = await axiosInstance.get("/kiosk/favorite/user/");
->>>>>>> 57759a28fd8a96c57dd5579ade064a864b357526
             if (favorites.status == 200) {
                 let myfavorites = []
-<<<<<<< HEAD
-    
-
-                for(let i = 0;i < len; i++){
-                    let id = favorites.data[i].product
-                    let pos = favorites.data[i].position
-=======
                 for(let i = 0;i < favorites.data.length; i++){
                     let pos = i;
 
->>>>>>> 57759a28fd8a96c57dd5579ade064a864b357526
 
                     const product = favorites.data[i].product;
-
-<<<<<<< HEAD
-                    const product = await axiosInstance.get("/kiosk/product/" + id + "/")
-
-                    myfavorites[pos] = <Product name={product.data.name} price={product.data.price} image={product.data.image}
-                                        id={id} user={favorites.data[i].user} />
-=======
+                    console.log(product)
                     myfavorites[pos] = <Product name={product.name} price={product.price} image={product.image}
-                                        id={i} user={favorites.data[i].user} />
->>>>>>> 57759a28fd8a96c57dd5579ade064a864b357526
+                                        id={product.id} />
 
                 }
                 return myfavorites
@@ -91,13 +67,8 @@ class Dashboard extends React.Component{
 
         this.createFavorites().then(favs => this.setState({myfavorites: favs}))
         this.createProducts().then(prods => this.setState({allproducts: prods}))
-<<<<<<< HEAD
-    }
-
-=======
         this.createFavorites().then(favs => this.setState({myfavorites: favs}));
     }
->>>>>>> 57759a28fd8a96c57dd5579ade064a864b357526
 
     render(){
         return (<div>
@@ -148,9 +119,4 @@ class Dashboard extends React.Component{
     }
 
 }
-<<<<<<< HEAD
-
-Dashboard.contextType = UserContext;
-=======
->>>>>>> 57759a28fd8a96c57dd5579ade064a864b357526
 export default Dashboard
