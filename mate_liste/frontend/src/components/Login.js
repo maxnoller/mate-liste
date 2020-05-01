@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import Box from "@material-ui/core/Box";
-import jwt_decode from "jwt-decode";
 import axiosInstance from "../axiosApi";
 import UserContext from "../UserContext";
 
@@ -15,9 +14,9 @@ const sleep = (milliseconds) => {
   }
 
 class Login extends Component{
-    constructor(props){
+    constructor(props, context){
         super(props);
-        if(this.context.user != null){
+        if(context["user"] != null){
             props.history.push("/");
         }
         this.state = {username: "", password: "", snackbarOpen: false, alertElement: null, redirect: false};
@@ -39,6 +38,19 @@ class Login extends Component{
             })
         }
     }
+
+    async getUser(username) {
+        try {
+            const response = await axiosInstance.get("/auth/user/" + username +"/");
+            if (response.status == 200) {
+                return response.data;
+            }
+            return false;
+        } catch (error) {
+            throw error;
+        }
+      }
+
     async handleSubmit(event) {
         event.preventDefault();
         try {
@@ -53,8 +65,8 @@ class Login extends Component{
                 this.setState({alertElement: <Alert elevation={6} variant="filled" onClose={this.handleClose} severity="success">
                                                 Successfully logged in
                                              </Alert>});
-                this.setState({redirect: true});
-                this.setState({snackbarOpen: true});
+                this.getUser(this.state.username).then(user=>this.context.updateValue("user", user));
+                this.setState({redirect: true, snackbarOpen: true});
                 return response.data;
             }
         } catch (error) {
@@ -62,8 +74,7 @@ class Login extends Component{
                 this.setState({alertElement: <Alert elevation={6} variant="filled" onClose={this.handleClose} severity="error">
                                                 {error.response.data.detail}
                                              </Alert>});
-                this.setState({redirect: false});
-                this.setState({snackbarOpen: true});
+                this.setState({redirect: false, snackbarOpen: true});
                 return error.response.data;
             } else {
                 throw error;

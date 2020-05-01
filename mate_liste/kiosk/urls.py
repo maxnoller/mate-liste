@@ -11,12 +11,12 @@ router.register(r'product', ProductViewSet)
 router.register(r'favorite', FavoriteViewSet)
 
 urlpatterns = [
+    path('favorite/user/', UserFavoriteDetailView.as_view()),
     path('', include(router.urls)),
+    path('transaction/', TransactionListView.as_view()),
 ]
 
 suffixpatterns = [
-    path('favorite/user/<int:pk>/', UserFavoriteDetailView.as_view()),
-    path('transaction/', TransactionListView.as_view()),
     path('transaction/<int:pk>/', TransactionDetailView.as_view())
 ]
 

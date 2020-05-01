@@ -35,9 +35,10 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserFavoriteDetailView(APIView):
-    def get(self, request, pk, format=None):
-        queryset = User.objects.get(id=pk)
-        serializer = FavoritesSerializer(queryset, many=False)
+    def get(self, request, format=None):
+        user_id = jwt.decode(request.META['HTTP_AUTHORIZATION'][4:], settings.SECRET_KEY, algorithms=['HS256'])['user_id']
+        queryset = sorted(Favorite.objects.filter(user=user_id), key=Favorite.nrof_times_bought, reverse=True)
+        serializer = FavoriteSerializer(queryset, many=True)
         return Response(serializer.data)
 
 class TransactionListView(APIView):
