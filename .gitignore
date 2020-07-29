@@ -1,9 +1,12 @@
 /venv/
+migrations/
+media/
 staticfiles/
 node_modules/
 .vscode/
 images/
 main.js
+data.json
 *.sqlite3
 *.pyc
 *.code-workspace

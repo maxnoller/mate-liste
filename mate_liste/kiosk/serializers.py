@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
-from .models import Product, Favorite
+from .models import Product, Favorite, Transaction
 
 User = get_user_model()
 
@@ -22,13 +22,33 @@ class ProductSerializer(serializers.Serializer):
         return instance
 
 class FavoriteSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(many=False)
+    
     class Meta:
         model = Favorite
-        fields = '__all__'        
+        fields = ("id", "user", "product")
+        read_only_fields = ("position",)
 
 class FavoritesSerializer(serializers.ModelSerializer):
-    favorites = serializers.PrimaryKeyRelatedField(many=True, queryset=Favorite.objects.all().order_by('position'))
+    favorites = FavoriteSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ('favorites')
+        fields = ('favorites',)
+
+class TransactionGETSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    user = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    product = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    time = serializers.DateTimeField()
+    success = serializers.BooleanField()
+
+    class Meta:
+        model = Transaction
+        fields = ('id', 'user', 'product', 'time', 'success')
+
+class TransactionPOSTSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = ('product','user')
+        read_only_fields = ('time', 'success', 'id')

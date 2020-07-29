@@ -13,6 +13,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 class CustomUserSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
     email = serializers.EmailField(
         required=True
     )
@@ -23,7 +24,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'password', 'balance')
+        fields = ('id', 'email', 'username', 'password', 'balance')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
